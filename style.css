@@ -1,123 +1,37 @@
-* {
-  box-sizing: border-box;
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
 }
 
-body {
-  margin: 0;
-  background: radial-gradient(1200px 600px at top, #151515, #0a0a0a);
-  color: #e8e8e8;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-.container {
-  max-width: 900px;
-  margin: 48px auto;
-  padding: 32px;
-  background: rgba(15, 15, 15, 0.95);
-  border: 1px solid #1f1f1f;
-  border-radius: 16px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
-}
-
-h1 {
-  margin: 0 0 8px;
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
-
-.subtitle {
-  margin-bottom: 28px;
-  font-size: 14px;
-  opacity: 0.6;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 12px;
-  opacity: 0.7;
-}
-
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 12px 14px;
+.tab {
+  flex: 1;
+  padding: 12px;
   background: #0c0c0c;
   border: 1px solid #262626;
   border-radius: 12px;
-  color: #fff;
-  font-size: 14px;
-  outline: none;
-  transition: border 0.2s, box-shadow 0.2s;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: #555;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: #6b5cff;
-  box-shadow: 0 0 0 2px rgba(107, 92, 255, 0.25);
-}
-
-textarea {
-  resize: vertical;
-  min-height: 240px;
-  font-family: Consolas, monospace;
-}
-
-.full {
-  grid-column: 1 / -1;
-}
-
-button {
-  margin-top: 24px;
-  padding: 14px;
-  background: linear-gradient(135deg, #6b5cff, #7c6cff);
-  border: none;
-  border-radius: 14px;
-  color: #fff;
-  font-size: 15px;
+  color: #aaa;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+  transition: all 0.15s ease;
 }
 
-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 30px rgba(107, 92, 255, 0.35);
+.tab:hover {
+  color: #fff;
+  border-color: #444;
 }
 
-button:active {
-  transform: translateY(0);
-  box-shadow: 0 6px 18px rgba(107, 92, 255, 0.2);
+.tab.active {
+  background: linear-gradient(135deg, #6b5cff, #7c6cff);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(107,92,255,.35);
 }
 
-.footer {
-  margin-top: 28px;
-  font-size: 12px;
-  text-align: center;
-  opacity: 0.4;
+.tab-content {
+  display: none;
 }
 
-@media (max-width: 700px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .container {
-    margin: 20px;
-    padding: 24px;
-  }
+.tab-content.active {
+  display: block;
 }
