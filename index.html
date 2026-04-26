@@ -2,92 +2,68 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>dll generator</title>
-<style>
-body {
-  background:#0f0f0f;
-  color:#eaeaea;
-  font-family:system-ui;
-  padding:20px
-}
-input, textarea, select, button {
-  width:100%;
-  margin:8px 0;
-  padding:10px;
-  background:#1a1a1a;
-  color:#fff;
-  border:1px solid #333;
-  border-radius:6px
-}
-button {
-  background:#6b5cff;
-  cursor:pointer;
-  font-weight:600
-}
-button:hover {
-  opacity:.9
-}
-</style>
+<title>library generator</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2>c# dll generator</h2>
+<div class="container">
+  <h1>library generator</h1>
+  <p class="subtitle">generate clean c# or c++ projects instantly</p>
 
-<input id="name" placeholder="dll name">
-<input id="namespace" placeholder="namespace">
-<input id="version" placeholder="version (e.g. 1.0.0)">
-<select id="framework">
-  <option>net48</option>
-  <option>net6.0</option>
-  <option>net7.0</option>
-  <option>net8.0</option>
-</select>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('cs')">c#</button>
+    <button class="tab" onclick="switchTab('cpp')">c++</button>
+  </div>
 
-<textarea id="code" rows="12" placeholder="paste your c# code here"></textarea>
+  <div id="cs" class="tab-content active">
+    <div class="grid">
+      <div>
+        <label>dll name</label>
+        <input placeholder="MyLibrary">
+      </div>
+      <div>
+        <label>version</label>
+        <input placeholder="1.0.0">
+      </div>
+      <div class="full">
+        <label>c# code</label>
+        <textarea placeholder="paste your c# code here"></textarea>
+      </div>
+    </div>
+  </div>
 
-<button onclick="generate()">generate dll project</button>
+  <div id="cpp" class="tab-content">
+    <div class="grid">
+      <div>
+        <label>library name</label>
+        <input placeholder="MyLibrary">
+      </div>
+      <div>
+        <label>version</label>
+        <input placeholder="1.0.0">
+      </div>
+      <div class="full">
+        <label>header (.h)</label>
+        <textarea placeholder="paste header code"></textarea>
+      </div>
+      <div class="full">
+        <label>source (.cpp)</label>
+        <textarea placeholder="paste cpp code"></textarea>
+      </div>
+    </div>
+  </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <button>generate</button>
+</div>
 
 <script>
-function generate() {
-  const name = document.getElementById("name").value || "MyLibrary"
-  const ns = document.getElementById("namespace").value || name
-  const version = document.getElementById("version").value || "1.0.0"
-  const framework = document.getElementById("framework").value
-  const code = document.getElementById("code").value || `namespace ${ns} { public class Entry { } }`
+function switchTab(id) {
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"))
+  document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"))
 
-  const csproj = `
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>${framework}</TargetFramework>
-    <AssemblyName>${name}</AssemblyName>
-    <RootNamespace>${ns}</RootNamespace>
-    <Version>${version}</Version>
-    <OutputType>Library</OutputType>
-  </PropertyGroup>
-</Project>
-`.trim()
-
-  const cs = `
-using System;
-
-namespace ${ns}
-{
-${code}
-}
-`.trim()
-
-  const zip = new JSZip()
-  zip.file(`${name}.csproj`, csproj)
-  zip.file(`${name}.cs`, cs)
-
-  zip.generateAsync({ type:"blob" }).then(blob => {
-    const a = document.createElement("a")
-    a.href = URL.createObjectURL(blob)
-    a.download = `${name}_dll_project.zip`
-    a.click()
-  })
+  document.querySelector(`[onclick="switchTab('${id}')"]`).classList.add("active")
+  document.getElementById(id).classList.add("active")
 }
 </script>
 
